@@ -1,10 +1,14 @@
-#!/usr/bin/env ruby
+#!/usr/bin/ruby
 
-filename = 'README.MD'
+filename, options = ARGV
+
+if filename == nil or filename.empty?
+  filename = 'README.md'
+end
 
 File.open(filename, 'r') do |f|
   f.each_line do |line|
-    forbidden_words = ['Table of Contents', 'define', 'pragma']
+    forbidden_words = ['Table of Contents', 'toc', 'TOC', 'define', 'pragma']
     next if !line.start_with?('#') || forbidden_words.any? {|w| line =~ /#{w}/}
 
     title = line.gsub('#', '').strip
